@@ -73,7 +73,7 @@ connectWithRetry();
 
 // localhost:3000/api/v1/
 app.use("/api/v1/test/", (req, res) => {
-    res.send("<h1>Welcome!!!</h1>");
+    res.send("<h1>Welcome!</h1>");
     console.log("Welcome!!!");
 });
 // localhost:3000/api/v1/posts/
