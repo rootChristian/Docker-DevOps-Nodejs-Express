@@ -1,0 +1,73 @@
+*****DOCKER******
+
+Build docker image:
+- docker build -t node-app-image .
+
+Run docker image:
+- docker run -d -p 8888:5555 --name node-app node-app-image
+
+Run docker image and switch project ("-v $(pwd):/app"):
+- docker run -v $(pwd):/app -d -p 8888:5555 --name node-app node-app-image
+
+Update docker and add ("/app/node_modules"):
+- docker run -v $(pwd):/app -v /app/node_modules -d -p 8888:5555 --name node-app node-app-image
+
+Go to the image docker:
+- docker exec -it node-app bash 
+
+Protect project to can't create and read to file system  (":ro"):
+- docker run -v $(pwd):/app:ro -v /app/node_modules -d -p 8888:5555 --name node-app node-app-image
+
+Update docker port ("--env PORT=5550"):
+- docker run -v $(pwd):/app -v /app/node_modules -d --env PORT=5550 -p 8888:5550 --name node-app node-app-image
+
+Update docker and add environment variable ("--env-file ./.env"):
+- docker run -v $(pwd):/app -v /app/node_modules -d --env-file ./.env -p 8888:5550 --name node-app node-app-image
+
+List docker volume:
+- docker volume ls
+
+Delete docker volume keep the last docker volume:
+- docker volume prune
+
+Delete all docker volume:
+- docker rm node-app -fv
+
+
+
+*****DOCKER-COMPOSE******
+
+Run and build image docker and create default network:
+- docker-compose up -d
+
+Run and rebuild image docker if exist and create default network:
+- docker-compose up -d --build
+
+Stop and removing image docker and default network:
+- docker-compose down -v 
+
+Run and build image docker and create default network and pass the file docker-compose ("-f docker-compose.yml"):
+- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+Go to the image docker with username and password:
+- docker exec -it backend_mongo_1 mongo -u "christ" -p "passchrist"
+- show dbs; - use mydb; db.employees.insert({"name": "Bester pinor"}); - db.employees.find()
+
+To have information docker image ("backend_node-app_1"):
+- docker inspect backend_node-app_1
+
+To have information docker network ("backend_default"):
+- docker network inspect backend_default
+
+To see the logs of image building ("backend_node-app_1"):
+- docker logs backend_node-app_1 -f
+
+To not run dependency image ("--no-deps node-app"):
+- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --no-deps node-app
+
+Run and build image docker and create a new volume ("-V"):
+- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build -V
+
+Run to instance for docker image ("--scale node-app=2"):
+- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --scale node-app=2
+
